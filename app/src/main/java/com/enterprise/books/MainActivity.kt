@@ -4,12 +4,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.enterprise.books.constants.NytimesApiConstants
+import com.enterprise.books.databases.BookDatabase
 import com.enterprise.books.interfaces.NytimesApi
 import com.enterprise.books.models.AppBook
 import com.enterprise.books.models.BooksData
-import com.enterprise.books.models.BuyLink
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,8 +20,23 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        getBooks()
+        thread{
+
+            getBooks()
+
+            readBooks()
+
+        }
+
     }
+
+    private fun readBooks() {
+        val bookDao = BookDatabase.getDatabase(application).getBookDao()
+
+        val list = bookDao.getAllAppBooks()
+    }
+
+
 
     private fun getBooks() {
 
@@ -44,11 +60,16 @@ class MainActivity : AppCompatActivity() {
 
                     if(books != null){
 
+                        val bookDao = BookDatabase.getDatabase(application).getBookDao()
                         appBooks = arrayListOf()
 
                         for (book in books){
 
                             var appBook = AppBook()
+
+                            if(book.primaryIsbn13 != null){
+                                appBook.primaryIsbn13    = book.primaryIsbn13!!
+                            }
 
                             appBook.bookImage        = book.bookImage
                             appBook.bookImageWidth   = book.bookImageWidth
@@ -58,9 +79,14 @@ class MainActivity : AppCompatActivity() {
                             appBook.rank             = book.rank
                             appBook.description      = book.description
                             appBook.publisher        = book.publisher
-                            appBook.primaryIsbn13    = book.primaryIsbn13
+
 
                             appBooks.add(appBook)
+
+                            thread{
+                                bookDao.addAppBook(appBook)
+                            }
+
 
                         }
 

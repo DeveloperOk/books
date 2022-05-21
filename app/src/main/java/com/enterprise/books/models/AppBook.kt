@@ -1,8 +1,13 @@
 package com.enterprise.books.models
 
-import com.google.gson.annotations.SerializedName
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-class AppBook (
+@Entity(tableName = "book_table")
+data class AppBook (
+
+    @PrimaryKey
+    var primaryIsbn13      : String             = "",
 
     var bookImage          : String?             = null,
     var bookImageWidth     : Int?                = null,
@@ -11,7 +16,6 @@ class AppBook (
     var author             : String?             = null,
     var rank               : Int?                = null,
     var description        : String?             = null,
-    var publisher          : String?             = null,
-    var primaryIsbn13      : String?             = null,
+    var publisher          : String?             = null
 
 )
