@@ -4,13 +4,19 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.enterprise.books.converters.Converters
 import com.enterprise.books.interfaces.BookDao
+import com.enterprise.books.interfaces.SmallImageDao
 import com.enterprise.books.models.AppBook
+import com.enterprise.books.models.SmallImage
 
-@Database(entities = [AppBook::class], version = 1, exportSchema = false)
+@Database(entities = [AppBook::class, SmallImage::class], version = 1, exportSchema = false)
+@TypeConverters(Converters::class)
 abstract class BookDatabase: RoomDatabase() {
 
     abstract fun getBookDao(): BookDao
+    abstract fun getSmallImageDao(): SmallImageDao
 
     companion object {
 
