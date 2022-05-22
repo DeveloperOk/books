@@ -1,10 +1,14 @@
 package com.enterprise.books
 
+import android.content.Intent
 import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.ImageView
+import android.view.View
+import android.widget.Button
+import android.widget.Toast
+import com.enterprise.books.activities.ListActivity
 import com.enterprise.books.constants.ImageConstants
 import com.enterprise.books.constants.NytimesApiConstants
 import com.enterprise.books.databases.BookDatabase
@@ -19,41 +23,46 @@ import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
+    private var buttonDownloadBooks: Button? = null
+    private var buttonListBooks: Button? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        thread{
+        buttonDownloadBooks = findViewById(R.id.buttonDownloadBooks)
+        buttonListBooks = findViewById(R.id.buttonListBooks)
 
-            getBooks()
-
-            readBooks()
-
-            getSmallImage();
-
-        }
+        setButtonListeners()
 
     }
 
-    private fun getSmallImage() {
+    private fun setButtonListeners() {
 
-        val smallImageDao = BookDatabase.getDatabase(application).getSmallImageDao()
-        val element = smallImageDao.getSmallImage("9780316499378")
+        buttonDownloadBooks?.setOnClickListener(View.OnClickListener {
 
-        var imageView: ImageView = findViewById(R.id.imageView)
+            thread{
 
-        runOnUiThread {
-            imageView.setImageBitmap(element.smallImage)
-        }
+                getBooks()
+
+            }
+
+        })
+
+        buttonListBooks?.setOnClickListener(View.OnClickListener {
+
+            launchListActivity()
+
+        })
+
     }
 
+    private fun launchListActivity() {
 
-    private fun readBooks() {
-        val bookDao = BookDatabase.getDatabase(application).getBookDao()
+        val appIntent = Intent(this, ListActivity::class.java)
+        startActivity(appIntent)
 
-        val list = bookDao.getAllAppBooks()
     }
-
 
 
     private fun getBooks() {
@@ -78,12 +87,7 @@ class MainActivity : AppCompatActivity() {
 
                     if(books != null){
 
-                        val bookDao = BookDatabase.getDatabase(application).getBookDao()
-                        val smallImageDao = BookDatabase.getDatabase(application).getSmallImageDao()
-
                         for (book in books){
-
-
 
                             if(book.primaryIsbn13 != null){
 
@@ -105,16 +109,19 @@ class MainActivity : AppCompatActivity() {
 
 
                                 thread{
-                                    bookDao.addAppBook(appBook)
+                                    BookDatabase.getDatabase(application).getBookDao().addAppBook(appBook)
 
                                     val bitmap: Bitmap = Picasso.get().load(appBook.bookImage).resize(ImageConstants.SmallImageWidth,0).get()
                                     smallImage.smallImage = bitmap
-                                    smallImageDao.addSmallImage(smallImage)
+                                    BookDatabase.getDatabase(application).getSmallImageDao().addSmallImage(smallImage)
 
                                 }
 
                             }
                         }
+
+                        Thread.sleep(2000)
+                        Toast.makeText(applicationContext, R.string.main_activity_books_downloaded_message, Toast.LENGTH_LONG).show()
 
                     }
 

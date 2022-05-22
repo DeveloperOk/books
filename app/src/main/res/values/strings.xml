@@ -1,3 +1,12 @@
 <resources>
+
     <string name="app_name">Books</string>
+
+    <string name="small_image_content_description">appBook small image</string>
+
+    <string name="main_activity_download_books_button">DOWNLOAD BOOKS</string>
+    <string name="main_activity_list_books_button">LIST BOOKS</string>
+
+    <string name="main_activity_books_downloaded_message">Books Downloaded!</string>
+
 </resources>

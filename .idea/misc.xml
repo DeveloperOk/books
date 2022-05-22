@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Projects/AndroidStudioProjects/Books/app/src/main/res/drawable/app_book_border_line.xml" value="0.1" />
+        <entry key="..\:/Projects/AndroidStudioProjects/Books/app/src/main/res/layout/activity_list.xml" value="0.1956521739130435" />
         <entry key="..\:/Projects/AndroidStudioProjects/Books/app/src/main/res/layout/activity_main.xml" value="0.1956521739130435" />
+        <entry key="..\:/Projects/AndroidStudioProjects/Books/app/src/main/res/layout/app_book.xml" value="0.2" />
       </map>
     </option>
   </component>
