@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Books">
         <activity
+            android:name=".activities.BookDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.ListActivity"
             android:exported="false" />
         <activity

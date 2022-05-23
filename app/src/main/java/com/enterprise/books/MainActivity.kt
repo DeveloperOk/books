@@ -14,6 +14,7 @@ import com.enterprise.books.constants.NytimesApiConstants
 import com.enterprise.books.databases.BookDatabase
 import com.enterprise.books.interfaces.NytimesApi
 import com.enterprise.books.models.AppBook
+import com.enterprise.books.models.BigImage
 import com.enterprise.books.models.BooksData
 import com.enterprise.books.models.SmallImage
 import com.squareup.picasso.Picasso
@@ -29,6 +30,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        BookDatabase.getDatabase(application)
 
         buttonDownloadBooks = findViewById(R.id.buttonDownloadBooks)
         buttonListBooks = findViewById(R.id.buttonListBooks)
@@ -93,10 +96,11 @@ class MainActivity : AppCompatActivity() {
 
                                 var appBook = AppBook()
                                 var smallImage = SmallImage()
+                                var bigImage = BigImage()
 
-                                appBook.primaryIsbn13    = book.primaryIsbn13!!
+                                appBook.primaryIsbn13       = book.primaryIsbn13!!
                                 smallImage.primaryIsbn13    = book.primaryIsbn13!!
-
+                                bigImage.primaryIsbn13      = book.primaryIsbn13!!
 
                                 appBook.bookImage        = book.bookImage
                                 appBook.bookImageWidth   = book.bookImageWidth
@@ -111,9 +115,13 @@ class MainActivity : AppCompatActivity() {
                                 thread{
                                     BookDatabase.getDatabase(application).getBookDao().addAppBook(appBook)
 
-                                    val bitmap: Bitmap = Picasso.get().load(appBook.bookImage).resize(ImageConstants.SmallImageWidth,0).get()
-                                    smallImage.smallImage = bitmap
+                                    val bitmapSmall: Bitmap = Picasso.get().load(appBook.bookImage).resize(ImageConstants.SmallImageWidth,0).get()
+                                    smallImage.smallImage = bitmapSmall
                                     BookDatabase.getDatabase(application).getSmallImageDao().addSmallImage(smallImage)
+
+                                    val bitmapBig: Bitmap = Picasso.get().load(appBook.bookImage).resize(ImageConstants.BigImageWidth,0).get()
+                                    bigImage.bigImage = bitmapBig
+                                    BookDatabase.getDatabase(application).getBigImageDao().addBigImage(bigImage)
 
                                 }
 

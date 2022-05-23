@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.enterprise.books.models.AppBook
+import com.enterprise.books.models.SmallImage
 
 @Dao
 interface BookDao {
@@ -14,5 +15,8 @@ interface BookDao {
 
     @Query("SELECT * FROM book_table" )
     fun getAllAppBooks(): List<AppBook>
+
+    @Query("SELECT * FROM book_table WHERE primaryIsbn13 =:primaryIsbn13" )
+    fun getAppBook(primaryIsbn13: String): AppBook?
 
 }

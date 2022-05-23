@@ -1,6 +1,7 @@
 package com.enterprise.books.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
@@ -10,6 +11,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.enterprise.books.R
+import com.enterprise.books.activities.BookDetailActivity
+import com.enterprise.books.constants.AppConstants
 import com.enterprise.books.databases.BookDatabase
 import com.enterprise.books.models.AppBook
 import kotlin.concurrent.thread
@@ -49,10 +52,9 @@ class AppBookAdapter(val appBooksList: ArrayList<AppBook>, val context: Context)
 
                 var selectedAppBook = appBooksList[adapterPosition]
 
-                //val appIntent = Intent(context, CityDetailActivity::class.java)
-                //appIntent.putExtra(WeatherForecastConstants.SelectedNearCityKey, selectedNearCity)
-
-                //context.startActivity(appIntent)
+                val appIntent = Intent(context, BookDetailActivity::class.java)
+                appIntent.putExtra(AppConstants.SelectedAppBookPrimaryIsbn13, selectedAppBook.primaryIsbn13)
+                context.startActivity(appIntent)
 
             }
 

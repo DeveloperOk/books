@@ -9,4 +9,17 @@
 
     <string name="main_activity_books_downloaded_message">Books Downloaded!</string>
 
+    <string name="list_activity_title">List of Books</string>
+    <string name="book_detail_activity_title">Detail of Book</string>
+
+    <string name="big_image_content_description">appBook big image</string>
+
+    <string name="book_detail_activity_app_book_title">Title:</string>
+    <string name="book_detail_activity_app_book_author">Author:</string>
+    <string name="book_detail_activity_app_book_rank">Rank:</string>
+    <string name="book_detail_activity_app_book_publisher">Publisher:</string>
+    <string name="book_detail_activity_app_book_description">Description:</string>
+
+    <string name="book_detail_activity_favorite_button">FAVORITE</string>
+
 </resources>

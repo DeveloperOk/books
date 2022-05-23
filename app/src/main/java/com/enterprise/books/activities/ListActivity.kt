@@ -16,6 +16,8 @@ class ListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list)
 
+        title = getString(R.string.list_activity_title)
+
         thread {
 
             var appBooksList = BookDatabase.getDatabase(application).getBookDao().getAllAppBooks()
