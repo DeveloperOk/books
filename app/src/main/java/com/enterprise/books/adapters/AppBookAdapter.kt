@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.recyclerview.widget.RecyclerView
 import com.enterprise.books.R
 import com.enterprise.books.activities.BookDetailActivity
@@ -26,6 +27,7 @@ class AppBookAdapter(val appBooksList: ArrayList<AppBook>, val context: Context)
         private val textViewTitle: TextView = itemView.findViewById(R.id.textViewTitle)
         private val textViewAuthor: TextView = itemView.findViewById(R.id.textViewAuthor)
         private val imageViewAppBook: ImageView = itemView.findViewById(R.id.imageViewAppBook)
+        private val imageViewFavorite: ImageView = itemView.findViewById(R.id.imageViewFavorite)
 
         fun bind(appBook: AppBook, context: Context) {
 
@@ -36,9 +38,30 @@ class AppBookAdapter(val appBooksList: ArrayList<AppBook>, val context: Context)
 
 
                 val element =  BookDatabase.getDatabase(context).getSmallImageDao().getSmallImage(appBook.primaryIsbn13)
+                var favoriteBookLabel =
+                    BookDatabase.getDatabase(context).getFavoriteBookLabelDao()
+                        .getFavoriteBookLabel(appBook.primaryIsbn13)
+
 
                 Handler(Looper.getMainLooper()).post {
+
                     imageViewAppBook.setImageBitmap(element?.smallImage)
+
+                    if(favoriteBookLabel?.favorite != null){
+
+                        if(favoriteBookLabel?.favorite){
+
+                            imageViewFavorite?.setImageDrawable(getDrawable(context, R.drawable.ic_baseline_favorite_50))
+
+                        }else{
+
+                            imageViewFavorite?.setImageDrawable(getDrawable(context, R.drawable.ic_baseline_favorite_border_50))
+
+                        }
+
+
+                    }
+
                 }
 
             }

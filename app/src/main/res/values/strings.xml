@@ -22,4 +22,7 @@
 
     <string name="book_detail_activity_favorite_button">FAVORITE</string>
 
+    <string name="favorite_image_description">favorite image</string>
+    <string name="app_book_favorite_image_description">favorite image</string>
+
 </resources>

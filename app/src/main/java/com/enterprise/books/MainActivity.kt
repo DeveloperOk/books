@@ -13,10 +13,7 @@ import com.enterprise.books.constants.ImageConstants
 import com.enterprise.books.constants.NytimesApiConstants
 import com.enterprise.books.databases.BookDatabase
 import com.enterprise.books.interfaces.NytimesApi
-import com.enterprise.books.models.AppBook
-import com.enterprise.books.models.BigImage
-import com.enterprise.books.models.BooksData
-import com.enterprise.books.models.SmallImage
+import com.enterprise.books.models.*
 import com.squareup.picasso.Picasso
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
@@ -97,10 +94,12 @@ class MainActivity : AppCompatActivity() {
                                 var appBook = AppBook()
                                 var smallImage = SmallImage()
                                 var bigImage = BigImage()
+                                var favoriteBookLabel = FavoriteBookLabel()
 
                                 appBook.primaryIsbn13       = book.primaryIsbn13!!
                                 smallImage.primaryIsbn13    = book.primaryIsbn13!!
                                 bigImage.primaryIsbn13      = book.primaryIsbn13!!
+                                favoriteBookLabel.primaryIsbn13 = book.primaryIsbn13!!
 
                                 appBook.bookImage        = book.bookImage
                                 appBook.bookImageWidth   = book.bookImageWidth
@@ -122,6 +121,9 @@ class MainActivity : AppCompatActivity() {
                                     val bitmapBig: Bitmap = Picasso.get().load(appBook.bookImage).resize(ImageConstants.BigImageWidth,0).get()
                                     bigImage.bigImage = bitmapBig
                                     BookDatabase.getDatabase(application).getBigImageDao().addBigImage(bigImage)
+
+                                    favoriteBookLabel.favorite = false
+                                    BookDatabase.getDatabase(application).getFavoriteBookLabelDao().insertFavoriteBookLabel(favoriteBookLabel)
 
                                 }
 

@@ -1,16 +1,15 @@
 package com.enterprise.books.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
+import androidx.appcompat.app.AppCompatActivity
 import com.enterprise.books.R
-import com.enterprise.books.adapters.AppBookAdapter
 import com.enterprise.books.constants.AppConstants
 import com.enterprise.books.databases.BookDatabase
-import com.enterprise.books.models.AppBook
 import kotlin.concurrent.thread
+
 
 class BookDetailActivity : AppCompatActivity() {
 
@@ -21,6 +20,8 @@ class BookDetailActivity : AppCompatActivity() {
     private var textViewAppBookRank: TextView? = null
     private var textViewAppBookPublisher: TextView? = null
     private var textViewAppBookDescription: TextView? = null
+
+    private var imageViewFavorite: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,10 +36,51 @@ class BookDetailActivity : AppCompatActivity() {
         textViewAppBookPublisher = findViewById(R.id.textViewAppBookPublisher)
         textViewAppBookDescription = findViewById(R.id.textViewAppBookDescription)
 
+        imageViewFavorite = findViewById(R.id.imageViewFavorite)
+
         selectedAppBookPrimaryIsbn13 =
             intent.getStringExtra(AppConstants.SelectedAppBookPrimaryIsbn13).toString()
 
         updateUserInterface()
+
+        addButtonListeners()
+
+    }
+
+    private fun addButtonListeners() {
+
+        imageViewFavorite?.setOnClickListener(View.OnClickListener {
+            thread {
+                var favoriteBookLabel =
+                    BookDatabase.getDatabase(application).getFavoriteBookLabelDao()
+                        .getFavoriteBookLabel(selectedAppBookPrimaryIsbn13)
+
+                if (favoriteBookLabel?.favorite != null) {
+
+                    if (favoriteBookLabel?.favorite) {
+                        runOnUiThread {
+                            imageViewFavorite?.setImageDrawable(getDrawable(R.drawable.ic_baseline_favorite_border_100))
+                        }
+                        favoriteBookLabel.favorite = false
+                        BookDatabase.getDatabase(application).getFavoriteBookLabelDao()
+                            .addFavoriteBookLabel(favoriteBookLabel)
+
+                    } else {
+                        runOnUiThread {
+                            imageViewFavorite?.setImageDrawable(getDrawable(R.drawable.ic_baseline_favorite_100))
+                        }
+                        favoriteBookLabel.favorite = true
+                        BookDatabase.getDatabase(application).getFavoriteBookLabelDao()
+                            .addFavoriteBookLabel(favoriteBookLabel)
+
+                    }
+
+                }
+
+            }
+        })
+
+
 
     }
 
@@ -48,6 +90,7 @@ class BookDetailActivity : AppCompatActivity() {
 
             var bigImage = BookDatabase.getDatabase(application).getBigImageDao().getBigImage(selectedAppBookPrimaryIsbn13)
             var selectedAppBook = BookDatabase.getDatabase(application).getBookDao().getAppBook(selectedAppBookPrimaryIsbn13)
+            var favoriteBookLabel = BookDatabase.getDatabase(application).getFavoriteBookLabelDao().getFavoriteBookLabel(selectedAppBookPrimaryIsbn13)
 
             runOnUiThread {
 
@@ -61,6 +104,18 @@ class BookDetailActivity : AppCompatActivity() {
                 var outputStr =  addLineBreaks(inputStr)
                 textViewAppBookDescription?.text = outputStr
 
+                if(favoriteBookLabel?.favorite != null){
+
+                    if(favoriteBookLabel?.favorite){
+
+                        imageViewFavorite?.setImageDrawable(getDrawable(R.drawable.ic_baseline_favorite_100))
+
+                    }else{
+                        imageViewFavorite?.setImageDrawable(getDrawable(R.drawable.ic_baseline_favorite_border_100))
+
+                    }
+
+                }
 
             }
 

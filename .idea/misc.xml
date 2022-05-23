@@ -4,6 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Projects/AndroidStudioProjects/Books/app/src/main/res/drawable/app_book_border_line.xml" value="0.1" />
+        <entry key="..\:/Projects/AndroidStudioProjects/Books/app/src/main/res/drawable/ic_baseline_favorite_100.xml" value="0.1" />
+        <entry key="..\:/Projects/AndroidStudioProjects/Books/app/src/main/res/drawable/ic_baseline_favorite_50.xml" value="0.1555" />
+        <entry key="..\:/Projects/AndroidStudioProjects/Books/app/src/main/res/drawable/ic_baseline_favorite_border_100.xml" value="0.1" />
+        <entry key="..\:/Projects/AndroidStudioProjects/Books/app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.1065" />
+        <entry key="..\:/Projects/AndroidStudioProjects/Books/app/src/main/res/drawable/ic_baseline_favorite_border_50.xml" value="0.1065" />
         <entry key="..\:/Projects/AndroidStudioProjects/Books/app/src/main/res/layout/activity_book_detail.xml" value="0.16" />
         <entry key="..\:/Projects/AndroidStudioProjects/Books/app/src/main/res/layout/activity_list.xml" value="0.1956521739130435" />
         <entry key="..\:/Projects/AndroidStudioProjects/Books/app/src/main/res/layout/activity_main.xml" value="0.1956521739130435" />

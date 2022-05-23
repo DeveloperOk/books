@@ -18,6 +18,19 @@ class ListActivity : AppCompatActivity() {
 
         title = getString(R.string.list_activity_title)
 
+        updateUserInterface()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        updateUserInterface()
+
+    }
+
+    private fun updateUserInterface() {
+
         thread {
 
             var appBooksList = BookDatabase.getDatabase(application).getBookDao().getAllAppBooks()
@@ -34,6 +47,5 @@ class ListActivity : AppCompatActivity() {
             }
 
         }
-
     }
 }
