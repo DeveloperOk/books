@@ -70,11 +70,12 @@ class BookDetailActivity : AppCompatActivity() {
 
     private fun addLineBreaks(inputStr: String): String {
 
-        var listOfWords = inputStr.split(" ")
+        var space = " "
+        var listOfWords = inputStr.split(space)
         var outputStr = ""
         var numberofCharactersOfLine = 50
         var multiplier = 1
-        var space = " "
+
 
         for(word in listOfWords){
 
