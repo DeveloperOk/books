@@ -19,7 +19,7 @@
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/textViewAuthor"
         app:layout_constraintStart_toEndOf="@+id/imageViewAppBook"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageViewFavorite" />
 
     <TextView
         android:id="@+id/textViewAuthor"
@@ -50,7 +50,8 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_baseline_favorite_border_50"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/textViewTitle"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
